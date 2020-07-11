@@ -13,7 +13,12 @@ abstract class Validator
      */
     public function IsValid($param) : int
     {
-        return 0;
+        if ($param === null || $param === '')
+        {
+            return 1;
+        }
+        
+        return $this->IsFormatValid($param);
     }
     
     /**

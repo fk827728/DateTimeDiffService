@@ -15,7 +15,15 @@ class FilterValidator extends Validator
      */
     public function Transfer($param) : string
     {
-        return '';
+        if ($param === null)
+        {
+            $param = 'Base';
+        }
+        else if (ucfirst(strtolower($param)) === 'Base')
+        {
+            $param = 'Other';
+        }
+        return $param;
     }
 
     /**
@@ -24,6 +32,12 @@ class FilterValidator extends Validator
      */
     protected function IsFormatValid(string $param) : int
     {
-        return 0;
+        $param = ucfirst(strtolower($param));
+        $valid_array = ['Base', 'Seconds', 'Minutes', 'Hours', 'Years'];
+        if (in_array($param, $valid_array))
+        {
+            return 0;
+        }
+        return 2;
     }
 }
