@@ -10,7 +10,7 @@ use App\Libraries\Classes\DateTimeDiff\MinutesDateTimeDiff;
 use App\Libraries\Classes\DateTimeDiff\HoursDateTimeDiff;
 use App\Libraries\Classes\DateTimeDiff\YearsDateTimeDiff;
 
-class DateTimeSimpleFactoryTest extends TestCase
+class DateTimeDiffSimpleFactoryTest extends TestCase
 {
     /**
      * A basic unit test example.

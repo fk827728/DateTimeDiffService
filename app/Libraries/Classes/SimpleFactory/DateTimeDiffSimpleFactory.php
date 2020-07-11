@@ -16,7 +16,7 @@ class DateTimeDiffSimpleFactory
     {
         $filter = ucfirst(strtolower($filter));
         $class = '\\App\\Libraries\\Classes\\DateTimeDiff\\'.$filter.'DateTimeDiff';
+    
         return new $class();
-        
     }
 }
