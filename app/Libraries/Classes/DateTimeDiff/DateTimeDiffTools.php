@@ -1,6 +1,9 @@
 <?php
 namespace App\Libraries\Classes\DateTimeDiff;
 
+use App\Libraries\Classes\SimpleFactory\DateTimeDiffSimpleFactory;
+use App\Libraries\Classes\DateTimeDiff\BaseDateTimeDiff;
+
 /**
  * @property $datetimediff
  * @method __construct(string $filter)
@@ -15,6 +18,9 @@ class DateTimeDiffTools
      */
     public function __construct(string $filter)
     {
+        $factory = new DateTimeDiffSimpleFactory();
+        $datetimediff = $factory->CreateInstance($filter);
+        $this->datetimediff = $datetimediff;
     }
 
     /**
@@ -24,6 +30,6 @@ class DateTimeDiffTools
      */
     public function GetDateTimeDiff(string $start, string $end) : array
     {
-        return [];
+        return $this->datetimediff->GetDateTimeDiff($start, $end);
     }
 }
