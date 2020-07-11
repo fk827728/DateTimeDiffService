@@ -40,7 +40,10 @@
         },
         "classmap": [
             "database/seeds",
-            "database/factories"
+            "database/factories",
+	        "app/Libraries/Classes/DateTimeDiff",
+            "app/Libraries/Classes/SimpleFactory",
+            "app/Libraries/Classes/Validator"
         ]
     },
     "autoload-dev": {
