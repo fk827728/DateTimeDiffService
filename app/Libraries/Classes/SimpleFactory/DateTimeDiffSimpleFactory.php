@@ -14,6 +14,9 @@ class DateTimeDiffSimpleFactory
      */
     public function CreateInstance(string $filter) : BaseDateTimeDiff
     {
-        return new BaseDateTimeDiff();
+        $filter = ucfirst(strtolower($filter));
+        $class = '\\App\\Libraries\\Classes\\DateTimeDiff\\'.$filter.'DateTimeDiff';
+        return new $class();
+        
     }
 }
