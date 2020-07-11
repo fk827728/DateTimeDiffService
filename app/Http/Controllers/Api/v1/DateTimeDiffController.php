@@ -23,7 +23,14 @@ class DateTimeDiffController extends Controller
      */
     public function DateTimeDiff(Request $request, $start, $end, $filter = null)
     {
+        //Cross-origin resource sharing, just a sample
+        header('content-type:application:json;charset=utf8');  
+        header('Access-Control-Allow-Origin:https://www.sample.com');
+        header('Access-Control-Allow-Methods:*');  
+        header('Access-Control-Allow-Headers:x-requested-with,content-type'); 
+
         $result = [];
+
         //validate parameters
         $validator = new DateTimeValidator;
         $ret = $validator->IsValid($start);
