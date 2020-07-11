@@ -24,70 +24,70 @@ class DateTimeDiffController extends Controller
     public function DateTimeDiff(Request $request, $start, $end, $filter = null)
     {
         $result = [];
+        //validate parameters
+        $validator = new DateTimeValidator;
+        $ret = $validator->IsValid($start);
+
+        if ($ret === 1)
+        {
+            $result['code'] = 40011;  
+            $result['state'] = 'error';
+            $result['message'] = 'The start datetime is empty.';
+            
+            return $result;
+        }
+        else if ($ret === 2)
+        {
+            $result['code'] = 40012;  
+            $result['state'] = 'error';
+            $result['message'] = 'The start datetime format is not ISO 8601 format.';
+
+            return $result;
+        }
+
+        $validator = new DateTimeValidator;
+        $ret = $validator->IsValid($end);
+
+        if ($ret === 1)
+        {
+            $result['code'] = 40011;  
+            $result['state'] = 'error';
+            $result['message'] = 'The end datetime is empty.';
+
+            return $result;
+        }
+        else if ($ret === 2)
+        {
+            $result['code'] = 40012;  
+            $result['state'] = 'error';
+            $result['message'] = 'The end datetime format is not ISO 8601 format.';
+
+            return $result;
+        }
+
+        $validator = new FilterValidator;
+        $filter = $validator->Transfer($filter);
+        $ret = $validator->IsValid($filter);
+
+        if ($ret === 1)
+        {
+            $result['code'] = 40011;  
+            $result['state'] = 'error';
+            $result['message'] = 'The filter is empty.';
+
+            return $result;
+        }
+        else if ($ret === 2)
+        {
+            $result['code'] = 40012;  
+            $result['state'] = 'error';
+            $result['message'] = 'The filter format is wrong.';
+
+            return $result;
+        }
+
         try
         {
-            //validate parameters
-            $validator = new DateTimeValidator;
-            $ret = $validator->IsValid($start);
-
-            if ($ret === 1)
-            {
-                $result['code'] = 40011;  
-                $result['state'] = 'error';
-                $result['message'] = 'The start datetime is empty.';
-                
-                return $result;
-            }
-            else if ($ret === 2)
-            {
-                $result['code'] = 40012;  
-                $result['state'] = 'error';
-                $result['message'] = 'The start datetime format is not ISO 8601 format.';
-
-                return $result;
-            }
-
-            $validator = new DateTimeValidator;
-            $ret = $validator->IsValid($end);
-
-            if ($ret === 1)
-            {
-                $result['code'] = 40011;  
-                $result['state'] = 'error';
-                $result['message'] = 'The end datetime is empty.';
-
-                return $result;
-            }
-            else if ($ret === 2)
-            {
-                $result['code'] = 40012;  
-                $result['state'] = 'error';
-                $result['message'] = 'The end datetime format is not ISO 8601 format.';
-
-                return $result;
-            }
-
-            $validator = new FilterValidator;
-            $filter = $validator->Transfer($filter);
-            $ret = $validator->IsValid($filter);
-
-            if ($ret === 1)
-            {
-                $result['code'] = 40011;  
-                $result['state'] = 'error';
-                $result['message'] = 'The filter is empty.';
-
-                return $result;
-            }
-            else if ($ret === 2)
-            {
-                $result['code'] = 40012;  
-                $result['state'] = 'error';
-                $result['message'] = 'The filter format is wrong.';
-
-                return $result;
-            }
-
             $datetimediff_tools = new DateTimeDiffTools($filter);
             $ret = $datetimediff_tools->GetDateTimeDiff($start, $end);
 
@@ -100,7 +100,6 @@ class DateTimeDiffController extends Controller
         }
         catch (\Exception $exp)
         {
-            header('HTTP/1.1 500 Internal Server Error');
             $result['code'] = 500;  
             $result['state'] = 'error';
             $result['message'] = $exp->getMessage();

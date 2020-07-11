@@ -16,6 +16,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'v1'], function () 
 {
-    Route::get('/datetimediff/{start}/{end}', 'Api\v1\DateTimeDiffController@DateTimeDiff');
-    Route::get('/datetimediff/{start}/{end}/{filter}', 'Api\v1\DateTimeDiffController@DateTimeDiff');
+    Route::get('/public/datetimediff/{start}/{end}', 'Api\v1\DateTimeDiffController@DateTimeDiff');
+    Route::get('/public/datetimediff/{start}/{end}/{filter}', 'Api\v1\DateTimeDiffController@DateTimeDiff');
+
+    Route::get('/datetimediff/{start}/{end}', 'Api\v1\DateTimeDiffController@DateTimeDiff')->middleware('auth:api');
+    Route::get('/datetimediff/{start}/{end}/{filter}', 'Api\v1\DateTimeDiffController@DateTimeDiff')->middleware('auth:api');
 });
+ 
