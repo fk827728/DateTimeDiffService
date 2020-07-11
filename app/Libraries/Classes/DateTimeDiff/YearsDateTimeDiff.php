@@ -15,6 +15,13 @@ class YearsDateTimeDiff extends BaseDateTimeDiff
      */
     public function GetDateTimeDiff(string $start, string $end) : array
     {
-        return [];
+        $data = parent::GetDateTimeDiff($start, $end);
+
+        //take 365 days as 1 year
+        $ret['days_years'] = intdiv($data['days'], 365);
+        $ret['weekdays_years'] = intdiv($data['weekdays'], 365);
+        $ret['compete_weeks_years'] = intdiv($data['compete_weeks'] * 7, 365);
+        
+        return $ret;
     }
 }

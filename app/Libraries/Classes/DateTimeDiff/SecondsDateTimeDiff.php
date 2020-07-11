@@ -15,6 +15,12 @@ class SecondsDateTimeDiff extends BaseDateTimeDiff
      */
     public function GetDateTimeDiff(string $start, string $end) : array
     {
-        return [];
+        $data = parent::GetDateTimeDiff($start, $end);
+
+        $ret['days_seconds'] = $data['days'] * 24 * 60 * 60;
+        $ret['weekdays_seconds'] = $data['weekdays'] * 24 * 60 * 60;
+        $ret['compete_weeks_seconds'] = $data['compete_weeks'] * 7 * 24 * 60 * 60;
+
+        return $ret;
     }
 }
