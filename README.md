@@ -99,14 +99,31 @@ Enter into the folder /var/www/html/DateTimeDiffService, composer install
 
 ## Configure Environment Parameter
 
-Copy .env.example to .env and edit and save DB_USERNAME and DB_PASSWORD
+Modify the property of folder DateTimeDiffService
+
+>`chown -R apache:apache /var/www/html/DateTimeDiffService`<br>
+>`chown -R 755 /var/www/html/DateTimeDiffService`
+
+Copy .env.example to .env and edit and modify DB_USERNAME and DB_PASSWORD
 
 >`cp .env.example .env`<br>
->`vi .env`
+>`vi .env`<br>
 
 Make your own key
 
 >`php artisan key:generate`
+
+Copy the APP_KEY in .env and modify config/app.php
+
+>`vi .env`<br>
+
+Ctrl+C copy the APP_KEY
+
+>`vi config/app.php`<br>
+
+Modify "'key' => env('APP_KEY')," to "'key' => env('APP_KEY', your_generated_key)," `, then restart Apache
+
+>`systemctl restart httpd`
 
 ## Test
 
