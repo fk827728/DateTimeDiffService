@@ -99,10 +99,15 @@ Enter into the folder /var/www/html/DateTimeDiffService, composer install
 
 ## Configure Environment Parameter
 
-Modify the property of folder DateTimeDiffService
+Set proper permissions on files.
 
 >`chown -R apache:apache /var/www/html/DateTimeDiffService`<br>
->`chown -R 755 /var/www/html/DateTimeDiffService`
+>`chown -R 755 /var/www/html/DateTimeDiffService`<br>
+>`chmod -R 755 /var/www/html/DateTimeDiffService/storage`
+
+SELinux enabled systems also run the below command to allow write on storage directory.
+
+>`chcon -R -t httpd_sys_rw_content_t /var/www/html/DateTimeDiffService/storage`
 
 Copy .env.example to .env and edit and modify DB_USERNAME and DB_PASSWORD
 
