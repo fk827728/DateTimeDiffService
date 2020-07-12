@@ -104,10 +104,6 @@ Copy .env.example to .env and edit and save DB_USERNAME and DB_PASSWORD
 >`cp .env.example .env`<br>
 >`vi .env`
 
-Make the fold storage permission
-
->`chmod -R 777 storage`
-
 Make your own key
 
 >`php artisan key:generate`
