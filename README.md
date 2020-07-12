@@ -126,7 +126,17 @@ Ctrl+C copy the APP_KEY
 
 >`vi config/app.php`<br>
 
-Modify "'key' => env('APP_KEY')," to "'key' => env('APP_KEY', your_generated_key)," `, then restart Apache
+Modify "'key' => env('APP_KEY')," to "'key' => env('APP_KEY', your_generated_key)," `
+
+Edit Apache configuration file /etc/httpd/conf/httpd.conf and add below code at end of file
+
+>`vim /etc/httpd/conf/httpd.conf`
+
+>`<Directory /var/www/html/DateTimeDiffService>`<br>
+>`AllowOverride All`<br>
+>`</Directory>`
+
+Restart Apache
 
 >`systemctl restart httpd`
 
