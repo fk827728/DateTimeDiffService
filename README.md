@@ -1,79 +1,123 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+# DateTimeDiffService Deployment
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+DateTimeDiffService provides an API to get the difference between two Date Times. The project deployment on CentOS7 steps are below:
 
-## About Laravel
+- Install LAMP, Git and Composer
+- Clone Project
+- Import Database
+- Composer Install
+- Configure Environment Parameter
+- Test
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Install LAMP, Git and Composer
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Update Package Repository Cache
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Before you start building the stack, be sure to update the packages on your CentOS 7 server using the command
 
-## Learning Laravel
+>`sudo yum update`
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Install the Apache Web Server
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Install Apache on Centos with
 
-## Laravel Sponsors
+>`sudo yum install httpd`
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Finally, set up Apache to start at boot
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
-- [云软科技](http://www.yunruan.ltd/)
+>`sudo systemctl enable httpd.service`
 
-## Contributing
+### Install MySQL (MariaDB)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Install MariaDB with the command
 
-## Code of Conduct
+>`sudo yum install mariadb-server mariadb`
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Now start MariaDB using the command, and set the password of MySQL
 
-## Security Vulnerabilities
+>`sudo systemctl start mariadb`
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Run MySQL Security Script
 
-## License
+Begin by typing the command
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+>`sudo mysql_secure_installation`
+
+Lastly, enable MariaDB to start up when you boot the system
+
+>`sudo systemctl enable mariadb.service`
+
+### Install PHP 7
+
+Install the MySQL extension along with PHP, again using the yum package installer, with the command
+
+>`yum install epel-release`<br>
+>`yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm`<br>
+>`yum install -y php73-php-fpm php73-php-cli php73-php-bcmath php73-php-gd php73-php-json php73-php-mbstring php73-php-mcrypt php73-php-mysqlnd php73-php-opcache php73-php-pdo php73-php-pecl-crypto php73-php-pecl-mcrypt php73-php-pecl-geoip php73-php-recode php73-php-snmp php73-php-soap php73-php-xmll`<br>
+>`systemctl enable php73-php-fpm`<br>
+>`systemctl start php73-php-fpm`<br>
+>`yum-config-manager --enable remi-php73`<br>
+>`yum -y install php php-opcache`<br>
+>`yum install php-mbstring`<br>
+>`yum install php-dom`
+
+To have your Apache webserver start co-working with PHP, restart the server
+
+>`sudo systemctl restart httpd.service`
+
+### Install Git
+
+>`yum install git`
+
+### Install Composer
+
+>`cd /tmp`<br>
+>`sudo curl -sS https://getcomposer.org/installer | php`<br>
+>`mv composer.phar /usr/local/bin/composer`
+
+## Clone Project
+
+Enter into Apache folder /var/www/html, git clone the project DateTimeDiffService
+
+>`git clone https://github.com/fk827728/DateTimeDiffService.git`
+
+## Import Database
+
+Enter MySQL, source datetimediff.sql in documents folder of project folder<br>
+This is the database used to Authentication
+
+>`mysql -uroot -p`<br>
+>`>> source /var/www/html/DateTimeDiffService/documents/datetimediff.sql;`
+
+## Composer Install
+
+Enter into the folder /var/www/html/DateTimeDiffService, composer install
+
+>`composer install`
+
+## Configure Environment Parameter
+
+Copy .env.example to .env and edit and save DB_USERNAME and DB_PASSWORD
+
+>`cp .env.example .env`<br>
+>`vi .env`
+
+Make the fold storage permission
+
+>`chmod -R 777 storage`
+
+Make your own key
+
+>`php artisan key:generate`
+
+## Test
+
+The installation is finished and Chrome Browser or Postman can be used to test the url below
+
+Authenticate URL
+
+>`http://server_ip/DateTimeDiffService/public/api/v1/datetimediff/2020-01-01/2020-01-02`
+
+Public URL
+
+>`http://server_ip/DateTimeDiffService/public/api/v1/public/datetimediff/2020-01-01/2020-01-02`
